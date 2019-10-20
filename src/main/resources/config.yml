@@ -1,0 +1,28 @@
+# message to show if the version is not whitelisted
+whitelistMessage: "&cThe version you used is not supported on this server. Only 1.8-1.14.4"
+# message to show if the version is in the whitelist but has been blacklisted.
+blacklistMessage: "&cThis minecraft version is not supported. We recommend to use 1.12.2"
+# message to show for players with bypass permission
+bypassMessage: "&c&lYou are using a non-supported minecraft version. We recommend to use 1.12.2"
+# time in seconds to repeat the message. 0 to not repeat. -1 to disable the message.
+repeatBypassMessage: 900 
+
+# This setting allow you to whitelist multiple versions like 1.8-1.14.4
+# and also blacklist inbetween versions like 1.9 and 1.10
+
+whitelist:
+   # enable the use of allowing all version between "start" and "end"?
+   # default "start" and "end" indicates whitelisting the versions 1.8-1.14.4 
+   enableStartEnd: true
+   start: 1.8
+   # ProtocolSupport is also supported
+   # end: MINECRAFT_1_14_4
+   end: 1.14.4
+   
+   # allowing individual versions
+   allowVersions:
+   - 1.7.5
+   
+# deny login with these versions. this will also override whitelist.
+blacklist:
+- 1.9

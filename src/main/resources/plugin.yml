@@ -1,0 +1,20 @@
+name: EnchantedBlockVersion
+version: 1.0
+main: com.aidn5.enchantedblockversion.EnchantedBlockVersion
+author: aidn5
+depend:
+- ProtocolSupport
+softDepend:
+- Vault
+permissions:
+   eblockversion.bypass.blacklist:
+      description: allow player to connect using the blacklisted versions, as long as the version is found in the whitelist.
+      default: false
+   eblockversion.bypass.all:
+      description: allow player to connect the all versions.
+      default: false
+      children:
+         eblockversion.bypass.blacklist: true
+   eblockversion.bypass.disableNotify:
+      description: do not send chat notification to the the player if they are connected using the bypass.
+      default: false
