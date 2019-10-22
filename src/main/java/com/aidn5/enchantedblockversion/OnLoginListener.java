@@ -126,7 +126,7 @@ class OnLoginListener implements Listener {
         e.getPlayer().kickPlayer(parentInstance.getConfigInstance().getBlacklistMessage());
 
       } else {
-        parentInstance.getVersionReminder().remindPlayer(player);
+        handleRemindPlayer(player);
       }
 
     } else if (!parentInstance.isWhitelisted(usedVersion)) {
@@ -135,8 +135,15 @@ class OnLoginListener implements Listener {
         e.getPlayer().kickPlayer(parentInstance.getConfigInstance().getWhitelistMessage());
 
       } else {
-        parentInstance.getVersionReminder().remindPlayer(player);
+        handleRemindPlayer(player);
       }
     }
+  }
+
+  private void handleRemindPlayer(@Nonnull final Player player) {
+    final int messageDelay = 20; // One second delay
+    Bukkit.getScheduler().runTaskLater(parentInstance, () -> {
+      parentInstance.getVersionReminder().remindPlayer(player);
+    }, messageDelay);
   }
 }
