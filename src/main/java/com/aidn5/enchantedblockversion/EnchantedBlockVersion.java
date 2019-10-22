@@ -182,13 +182,18 @@ public class EnchantedBlockVersion extends JavaPlugin {
     }
     try {
       return ProtocolVersion.valueOf(version);
-    } catch (Exception ignored) {}
+    } catch (Exception ignored) {
+      // it means the version is not protocol type like "MINECRAFT_1_12_2"
+    }
 
     try {
       String constructedVersion = prefixEnum
           + Pattern.compile(".", Pattern.LITERAL).matcher(version).replaceAll("_");
       return ProtocolVersion.valueOf(constructedVersion);
-    } catch (Exception ignored) {}
+    } catch (Exception ignored) {
+      // the versions is not registered
+      // returning null
+    }
 
     return null;
   }
