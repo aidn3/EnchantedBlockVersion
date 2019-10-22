@@ -7,6 +7,13 @@ bypassMessage: "&c&lYou are using a non-supported minecraft version. We recommen
 # time in seconds to repeat the message. 0 to not repeat. -1 to disable the message.
 repeatBypassMessage: 900 
 
+
+# Notify the player if they aren't using the recommended version 
+recommended:
+   # change this to null to disable it
+   version: 1.12.2
+   message: "&c&lWe recommend to change the minecraft version to 1.12.2 for the uptmost experience."
+
 # This setting allow you to whitelist multiple versions like 1.8-1.14.4
 # and also blacklist inbetween versions like 1.9 and 1.10
 

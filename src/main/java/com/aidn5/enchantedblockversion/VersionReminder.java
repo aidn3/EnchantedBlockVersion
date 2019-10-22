@@ -80,6 +80,21 @@ public class VersionReminder {
     }
   }
 
+  /**
+   * Recommend the player to use the specified minecraft version in the
+   * settings for the utmost experience.
+   *
+   * @param player
+   *          the player to notify/recommend
+   *
+   * @see Config#getRecommendedVersion()
+   * @see Config#getRecommendMessage()
+   * @see EnchantedBlockVersion#getConfigInstance()
+   */
+  public void recommendPlayer(@Nonnull Player player) {
+    player.sendMessage(pluginInstance.getConfigInstance().getRecommendMessage());
+  }
+
   private void sendMessageToAll() {
     final String bypassMessage = pluginInstance.getConfigInstance().getBypassMessage();
     final List<Connection> connections = ProtocolSupportAPI.getConnections();

@@ -41,10 +41,14 @@ public class Config {
   private String whitelistMessage = "";
   @Nonnull
   private String blacklistMessage = "";
+
   @Nonnull
   private String bypassMessage = "";
-
   private int repeatBypassMessage = 600;
+
+  private ProtocolVersion recommendedVersion = null;
+  @Nonnull
+  private String recommendMessage = "";
 
   /**
    * Constructor. Use {@link #reload()} to initiate the settings on the first run.
@@ -165,6 +169,32 @@ public class Config {
   }
 
   /**
+   * Get the recommended version the player should use on the server for the
+   * utmost experience.
+   *
+   * @return
+   *         the recommend minecraft version the
+   *         player should use on the server,
+   *         or <code>null</code> if it is disabled.
+   */
+  @Nullable
+  public ProtocolVersion getRecommendedVersion() {
+    return recommendedVersion;
+  }
+
+  /**
+   * Get the message to show in the player's chat if they are using a whitelisted
+   * version, but not the recommended one.
+   *
+   * @return
+   *         the message to show to the player.
+   */
+  @Nonnull
+  public String getRecommendMessage() {
+    return recommendMessage;
+  }
+
+  /**
    * Get the used instance with all the blacklisted versions.
    *
    * @return main instance contains all the blacklisted versions.
@@ -213,6 +243,8 @@ public class Config {
     final String whitelistMessage;
     final String blacklistMessage;
     final String bypassMessage;
+    final ProtocolVersion recommendedVersion;
+    final String recommendMessage;
 
 
     // add whitelist protocols from "start" and "end" if enabled
@@ -293,6 +325,13 @@ public class Config {
         "whitelistMessage in config.yml must not be null.");
 
 
+    recommendedVersion = EnchantedBlockVersion
+        .getProtocol(config.getString("recommended.version"));
+    recommendMessage = Objects.requireNonNull(
+        config.getString("recommended.message"),
+        "recommended.message must not be null.");
+
+
     // after finishing reloading without any exception,
     // setting the variables and return
     this.whitelistEnableStartEnd = whitelistEnableStartEnd;
@@ -304,7 +343,11 @@ public class Config {
 
     this.whitelistMessage = ChatColor.translateAlternateColorCodes('&', whitelistMessage);
     this.blacklistMessage = ChatColor.translateAlternateColorCodes('&', blacklistMessage);
+
     this.bypassMessage = ChatColor.translateAlternateColorCodes('&', bypassMessage);
     this.repeatBypassMessage = config.getInt("repeatBypassMessage");
+
+    this.recommendedVersion = recommendedVersion;
+    this.recommendMessage = ChatColor.translateAlternateColorCodes('&', recommendMessage);
   }
 }

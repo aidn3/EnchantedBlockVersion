@@ -143,6 +143,24 @@ public class EnchantedBlockVersion extends JavaPlugin {
   }
 
   /**
+   * Get the recommended version the player should use on the server for the
+   * utmost experience.
+   *
+   * @return
+   *         the recommend minecraft version the
+   *         player should use on the server,
+   *         or <code>null</code> if it is disabled.
+   *
+   * @see Config#getRecommendedVersion()
+   * @see Config#getRecommendMessage()
+   * @see #getConfigInstance()
+   */
+  @Nullable
+  public ProtocolVersion getRecommendedVersion() {
+    return getConfigInstance().getRecommendedVersion();
+  }
+
+  /**
    * Get the protocol for the given <code>version</code>.
    * This method support both version types, minecraft version like "1.12.2" and
    * ProtocolSupport version from {@link ProtocolVersion} like "MINECRAFT_1_12_2".

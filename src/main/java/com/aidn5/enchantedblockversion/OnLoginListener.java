@@ -29,6 +29,12 @@ import protocolsupport.api.events.PlayerLoginStartEvent;
  * @see VersionReminder
  */
 class OnLoginListener implements Listener {
+  /**
+   * Delay in ticks for the first message (direct after logging in)
+   * to not let it be drown by the other plugins' messages.
+   */
+  private static final int MESSAGE_DELAY = 20; // One second delay
+
   @Nonnull
   private final EnchantedBlockVersion parentInstance;
   private Object permissionProvider;
@@ -115,6 +121,7 @@ class OnLoginListener implements Listener {
   @EventHandler(priority = EventPriority.LOWEST)
   public void onPlayerJoin(final PlayerJoinEvent e) {
     final Player player = e.getPlayer();
+    final ProtocolVersion recommendedVersion = parentInstance.getRecommendedVersion();
     final ProtocolVersion usedVersion = ProtocolSupportAPI.getProtocolVersion(player);
     final boolean bypassAll = player.hasPermission(Permissions.BYPASS_ALL);
     final boolean bypassBlacklist = player.hasPermission(Permissions.BYPASS_BLACKLIST);
@@ -138,12 +145,20 @@ class OnLoginListener implements Listener {
         handleRemindPlayer(player);
       }
     }
+
+    // null if it is disabled
+    if (recommendedVersion != null) {
+      if (usedVersion != recommendedVersion) {
+        Bukkit.getScheduler().runTaskLater(parentInstance, () -> {
+          parentInstance.getVersionReminder().remindPlayer(player);
+        }, MESSAGE_DELAY);
+      }
+    }
   }
 
   private void handleRemindPlayer(@Nonnull final Player player) {
-    final int messageDelay = 20; // One second delay
     Bukkit.getScheduler().runTaskLater(parentInstance, () -> {
-      parentInstance.getVersionReminder().remindPlayer(player);
-    }, messageDelay);
+      parentInstance.getVersionReminder().recommendPlayer(player);
+    }, MESSAGE_DELAY);
   }
 }
